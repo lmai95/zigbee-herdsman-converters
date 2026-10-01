@@ -185,16 +185,20 @@ export const definitions: DefinitionWithExtend[] = [
         description: "ROVITO-Z ceiling light",
         extend: [m.light({colorTemp: {range: [153, 370]}, color: true})],
     },
-
     {
         zigbeeModel: ["EBF-RGB-ZMB-CLB"],
         model: "901471",
         vendor: "EGLO",
-        description: "ROVITO-Z ceiling light",
+        description: "ROVITO-Z ceiling light (separated white panel and RGB ring)",
+        meta: {multiEndpoint: true},
         extend: [
-            m.deviceEndpoints({endpoints: {1: 1, 3: 3}}),
+            m.deviceEndpoints({endpoints: {"white": 1, "rgb": 3}}),
             m.light({
+                endpointName: "white",
                 colorTemp: {range: [153, 370]},
+            }),
+            m.light({
+                endpointName: "rgb",
                 color: {modes: ["xy", "hs"], enhancedHue: true},
             }),
             m.commandsOnOff(),
